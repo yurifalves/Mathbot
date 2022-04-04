@@ -62,7 +62,7 @@ def primos2(mensagem):
 
 @bot.message_handler(commands=['informacoes'])
 def primos1(mensagem):
-    link = 'https://github.com/yurifalves/telegrambots/tree/main/Mathbot'
+    link = 'https://github.com/yurifalves/telegrambots/tree/main/mathbot'
     bot.send_message(mensagem.chat.id, f'O Bot ainda está em desenvolvimento.\nRepositório: {link}')
 
 
