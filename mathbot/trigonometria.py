@@ -22,6 +22,12 @@ def trig(angulo):
     ang = math.radians(angulo)
     seno, cos, tg = math.sin(ang), math.cos(ang), math.tan(ang)
     ang_congruo = angulo
+    result = f"""
+            Considerando o ângulo {angulo:.2f}°
+        Sen({angulo}°) = {seno:.2f}
+        Cos({angulo}°) = {cos:.2f}
+        Tg({angulo}°) = {tg:.2f}
+            """
     while ang_congruo > 360:
         ang_congruo -= 360
         result = f"""
