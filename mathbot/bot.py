@@ -4,7 +4,7 @@ import os
 import math
 import primos
 
-bot = telebot.TeleBot('5232695368:AAH_CQAYVlI0TVEas8XSppXvBOA1wY1LjY4')
+bot = telebot.TeleBot(TOKEN)
 
 
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Calcular Primos' else False)
