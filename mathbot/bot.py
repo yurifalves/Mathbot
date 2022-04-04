@@ -1,5 +1,6 @@
 import telebot
 import os
+import primos
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -17,7 +18,7 @@ def primos1(mensagem):
 
 def primos2(mensagem):
     primo1, primo2 = [int(num) for num in mensagem.text.split()]
-    resposta = checarintervalo(primo1, primo2, mensagem.chat.id)
+    resposta = primos.checarintervalo(primo1, primo2, mensagem.chat.id)
     if len(resposta) <= 4096:
         bot.send_message(mensagem.chat.id, resposta)
     else:
