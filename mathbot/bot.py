@@ -1,5 +1,6 @@
 import telebot
 import os
+import math
 import primos
 
 bot = telebot.TeleBot(TOKEN)
@@ -30,6 +31,34 @@ def primos2(mensagem):
         bot.send_document(mensagem.chat.id, open(f'primos({primo1}-{primo2}).txt', mode='rb'))
         os.remove(f'primos({primo1}-{primo2}).txt')
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
+    
+    
+@bot.message_handler(commands=['fatorial'])
+def fatorial1(mensagem):
+    texto_inicial = """
+    Envie algum número, no formato *num*\n
+    Ex: '10982' (sem as aspas)
+    equivale a solicitar o fatorial do número 10982.
+    """
+    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown')
+    bot.register_next_step_handler(sent_msg, fatorial2)
+
+
+def fatoria2(mensagem):
+    num = int(mensagem.text)
+    resposta = f'O fatorial de {num} é\n{math.factorial(num)}'
+    if len(str(resposta)) <= 4096:
+        bot.send_message(mensagem.chat.id, resposta)
+    else:
+        bot.send_message(mensagem.chat.id,
+                         f'Tamanho da resposta muito grande ( >= 4096 caracteres ),\no resultado estará no .txt abaixo:')
+        ref_arquivo = open(f'fatorial({num}).txt', mode='w')
+        ref_arquivo.write(resposta)
+        ref_arquivo.close()
+        bot.send_document(mensagem.chat.id, open(f'fatorial({num}).txt', mode='rb'))
+        os.remove(f'fatorial({num}).txt')
+    bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
+    
 
 @bot.message_handler(commands=['informacoes'])
 def primos1(mensagem):
@@ -46,6 +75,6 @@ def responder(mensagem):
     /informacoes
     """
     bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown')
-
+    
 
 bot.polling()
