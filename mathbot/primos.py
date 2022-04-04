@@ -26,5 +26,5 @@ def checarintervalo(a, b, chatid):
                 listaprimos.append(n)
             else:
                 listacompostos.append(n)
-        return f'Considerando o intervalo [{a}, {b}]\n-NÚMEROS PRIMOS: {listaprimos}' \
-               f'\n-NÚMEROS COMPOSTOS: {listacompostos}\n\ntempo de execução: {time.time() - start_time:.3f} s'
+        return f'Considerando o intervalo [{a}, {b}]\n\n-NÚMEROS PRIMOS: {listaprimos}' \
+               f'\n-NÚMEROS COMPOSTOS: {listacompostos}\n\n\ntempo de execução: {time.time() - start_time:.3f} s'
