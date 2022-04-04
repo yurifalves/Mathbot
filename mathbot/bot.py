@@ -1,4 +1,5 @@
 import telebot
+from telebot import types
 import os
 import math
 import primos
@@ -6,6 +7,7 @@ import primos
 bot = telebot.TeleBot(TOKEN)
 
 
+@bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Calcular Primos' else False)
 @bot.message_handler(commands=['calcularprimos'])
 def primos1(mensagem):
     texto_inicial = """
@@ -13,7 +15,8 @@ def primos1(mensagem):
     Ex: '1049 10982' (sem as aspas)
     equivale a solicitar os números primos no intervalo fechado [[1049, 10982]]
     """
-    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown')
+    markup = types.ReplyKeyboardRemove(selective=False)
+    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown', reply_markup=markup)
     bot.register_next_step_handler(sent_msg, primos2)
 
 
@@ -33,6 +36,7 @@ def primos2(mensagem):
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
 
+@bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Fatorial' else False)
 @bot.message_handler(commands=['fatorial'])
 def fatorial1(mensagem):
     texto_inicial = """
@@ -40,7 +44,8 @@ def fatorial1(mensagem):
     Ex: '10982' (sem as aspas)
     equivale a solicitar o fatorial do número 10982.
     """
-    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown')
+    markup = types.ReplyKeyboardRemove(selective=False)
+    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown', reply_markup=markup)
     bot.register_next_step_handler(sent_msg, fatorial2)
 
 
@@ -60,10 +65,12 @@ def fatorial2(mensagem):
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
 
+@bot.message_handler(func=lambda mensagem: True if mensagem.text == 'informações' else False)
 @bot.message_handler(commands=['informacoes'])
-def primos1(mensagem):
+def informacoes(mensagem):
     link = 'https://github.com/yurifalves/telegrambots/tree/main/mathbot'
-    bot.send_message(mensagem.chat.id, f'O Bot ainda está em desenvolvimento.\nRepositório: {link}')
+    markup = types.ReplyKeyboardRemove(selective=False)
+    bot.send_message(mensagem.chat.id, f'O Bot ainda está em desenvolvimento.\nRepositório: {link}', reply_markup=markup)
 
 
 @bot.message_handler(func=lambda mensagem: True)
@@ -75,7 +82,13 @@ def responder(mensagem):
     /fatorial Calcula o fatorial de um número x.
     /informacoes
     """
-    bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown')
+    markup = types.ReplyKeyboardMarkup()
+    itembtn1 = types.KeyboardButton('Calcular Primos')
+    itembtn2 = types.KeyboardButton('Fatorial')
+    itembtn3 = types.KeyboardButton('informações')
+    markup.row(itembtn1, itembtn2)
+    markup.row(itembtn3)
+    bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown', reply_markup=markup)
 
 
 bot.polling()
