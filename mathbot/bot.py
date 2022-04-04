@@ -4,7 +4,7 @@ import os
 import math
 import primos
 
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot('5232695368:AAH_CQAYVlI0TVEas8XSppXvBOA1wY1LjY4')
 
 
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Calcular Primos' else False)
@@ -86,7 +86,8 @@ def responder(mensagem):
     itembtn1 = types.KeyboardButton('Calcular Primos')
     itembtn2 = types.KeyboardButton('Fatorial')
     itembtn3 = types.KeyboardButton('informações')
-    markup.row(itembtn1, itembtn2)
+    markup.row(itembtn1)
+    markup.row(itembtn2)
     markup.row(itembtn3)
     bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown', reply_markup=markup)
 
