@@ -22,18 +22,15 @@ def trigonometria1(mensagem):
 
 
 def trigonometria2(mensagem):
+    start_time = time.time()
     angulo = int(mensagem.text)
-    resposta = trigonometria.trig(angulo)
-    if len(resposta) <= 4096:
-        bot.send_message(mensagem.chat.id, resposta)
-    else:
-        bot.send_message(mensagem.chat.id, f'Tamanho da resposta muito grande ( >= 4096 caracteres ),\no resultado estará no .txt abaixo:')
-        ref_arquivo = open(f'trigonometria({angulo}).txt', mode='w')
-        ref_arquivo.write(resposta)
-        ref_arquivo.close()
-        bot.send_document(mensagem.chat.id, open(f'trigonometria({angulo}).txt', mode='rb'))
-        os.remove(f'trigonometria({angulo}).txt')
+    ref_arquivo = trigonometria.grafico(angulo)
+    resposta = trigonometria.trig(angulo) + f'\ntempo de execução: {time.time() - start_time:.3f} s'
+    bot.send_photo(mensagem.chat.id, ref_arquivo)
+    bot.send_message(mensagem.chat.id, resposta)
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
+    ref_arquivo.close()
+    os.remove(f'trigonometria({angulo}).png')
 
 
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Calcular Primos' else False)
@@ -114,9 +111,9 @@ def responder(mensagem):
     /informacoes
     """
     markup = types.ReplyKeyboardMarkup()
-    itembtn1 = types.KeyboardButton('Calcular Primos')
+    itembtn1 = types.KeyboardButton('Trigonometria')
     itembtn2 = types.KeyboardButton('Fatorial')
-    itembtn3 = types.KeyboardButton('Trigonometria')
+    itembtn3 = types.KeyboardButton('Calcular Primos')
     itembtn4 = types.KeyboardButton('informações')
     markup.row(itembtn1)
     markup.row(itembtn2)
