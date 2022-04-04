@@ -2,9 +2,38 @@ import telebot
 from telebot import types
 import os
 import math
-import primos
+import time
+import primos, trigonometria
 
 bot = telebot.TeleBot(TOKEN)
+
+
+@bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Trigonometria' else False)
+@bot.message_handler(commands=['trigonometria'])
+def trigonometria1(mensagem):
+    texto_inicial = """
+    Envie um ângulo entre -∞ e +∞, no formato *angulo*\n
+    Ex: '389' (sem as aspas)
+    equivale a solicitar as informações trigonométricas do ângulo 389°
+    """
+    markup = types.ReplyKeyboardRemove(selective=False)
+    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown', reply_markup=markup)
+    bot.register_next_step_handler(sent_msg, trigonometria2)
+
+
+def trigonometria2(mensagem):
+    angulo = int(mensagem.text)
+    resposta = trigonometria.trig(angulo)
+    if len(resposta) <= 4096:
+        bot.send_message(mensagem.chat.id, resposta)
+    else:
+        bot.send_message(mensagem.chat.id, f'Tamanho da resposta muito grande ( >= 4096 caracteres ),\no resultado estará no .txt abaixo:')
+        ref_arquivo = open(f'trigonometria({angulo}).txt', mode='w')
+        ref_arquivo.write(resposta)
+        ref_arquivo.close()
+        bot.send_document(mensagem.chat.id, open(f'trigonometria({angulo}).txt', mode='rb'))
+        os.remove(f'trigonometria({angulo}).txt')
+    bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
 
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Calcular Primos' else False)
@@ -50,8 +79,9 @@ def fatorial1(mensagem):
 
 
 def fatorial2(mensagem):
+    start_time = time.time()
     num = int(mensagem.text)
-    resposta = f'O fatorial de {num} é\n{math.factorial(num)}'
+    resposta = f'{num}! =\n{math.factorial(num)}\n\ntempo de execução: {time.time() - start_time:.3f} s'
     if len(str(resposta)) <= 4096:
         bot.send_message(mensagem.chat.id, resposta)
     else:
@@ -78,6 +108,7 @@ def responder(mensagem):
     texto_padrao = """
     *MENU INICIAL*
 
+    /trigonometria Fornece informações a respeito de algum ângulo fornecido.
     /calcularprimos Calcula todos os primos num intervalo fechado [[a, b]].
     /fatorial Calcula o fatorial de um número x.
     /informacoes
@@ -85,10 +116,12 @@ def responder(mensagem):
     markup = types.ReplyKeyboardMarkup()
     itembtn1 = types.KeyboardButton('Calcular Primos')
     itembtn2 = types.KeyboardButton('Fatorial')
-    itembtn3 = types.KeyboardButton('informações')
+    itembtn3 = types.KeyboardButton('Trigonometria')
+    itembtn4 = types.KeyboardButton('informações')
     markup.row(itembtn1)
     markup.row(itembtn2)
     markup.row(itembtn3)
+    markup.row(itembtn4)
     bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown', reply_markup=markup)
 
 
