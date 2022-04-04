@@ -8,7 +8,7 @@ bot = telebot.TeleBot(TOKEN)
 @bot.message_handler(commands=['calcularprimos'])
 def primos1(mensagem):
     texto_inicial = """
-    Envie dois núemros primos, no formato *num1* *num2*\n
+    Envie dois números primos, no formato *num1* *num2*\n
     Ex: '1049 10982' (sem as aspas)
     equivale a solicitar os números primos no intervalo fechado [[1049, 10982]]
     """
