@@ -9,13 +9,11 @@ def checarintervalo(a, b, chatid):
     """
     from bob_telegram_tools.utils import TelegramTqdm
     from bob_telegram_tools.bot import TelegramBot
-    import time
-    start_time = time.time()
     if a < 0 or a > b:
         return f'alguma condição está sendo violada: a < 0 ou a < b'
     else:
-        listaprimos, listacompostos = [], []
-        bot_bob = TelegramBot(TOKEN, chatid)
+        listaprimos = []
+        bot_bob = TelegramBot('5232695368:AAH_CQAYVlI0TVEas8XSppXvBOA1wY1LjY4', chatid)
         pb = TelegramTqdm(bot_bob)
         for n in pb(range(a, b + 1)):
             cont = 0
@@ -24,7 +22,4 @@ def checarintervalo(a, b, chatid):
                     cont += 1
             if cont == 2:
                 listaprimos.append(n)
-            else:
-                listacompostos.append(n)
-        return f'Considerando o intervalo [{a}, {b}]\n\n-NÚMEROS PRIMOS: {listaprimos}' \
-               f'\n-NÚMEROS COMPOSTOS: {listacompostos}\n\n\ntempo de execução: {time.time() - start_time:.3f} s'
+        return f'Considerando o intervalo [{a}, {b}]\n\n-NÚMEROS PRIMOS: {listaprimos}'
