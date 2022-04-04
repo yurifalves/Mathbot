@@ -3,7 +3,7 @@ from telebot import types
 import os
 import math
 import time
-import primos, trigonometria
+import primos, trigonometria, eq2grau
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -37,7 +37,7 @@ def trigonometria2(mensagem):
 @bot.message_handler(commands=['calcularprimos'])
 def primos1(mensagem):
     texto_inicial = """
-    Envie dois números primos, no formato *num1* *num2*\n
+    Envie dois números primos, no formato *a* *b*\n
     Ex: '1049 10982' (sem as aspas)
     equivale a solicitar os números primos no intervalo fechado [[1049, 10982]]
     """
@@ -92,6 +92,28 @@ def fatorial2(mensagem):
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
 
+@bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Equação 2° grau' else False)
+@bot.message_handler(commands=['eq2grau'])
+def eq2grau1(mensagem):
+    texto_inicial = """
+    P(x) = ax²+bx+c
+    Envie os coeficientes, no formato *a b c*\n
+    Ex: '3 4 1' (sem as aspas)
+    equivale a solicitar as raízes de P(x) = 3x²+4x+1.
+    """
+    markup = types.ReplyKeyboardRemove(selective=False)
+    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown', reply_markup=markup)
+    bot.register_next_step_handler(sent_msg, eq2grau2)
+
+
+def eq2grau2(mensagem):
+    start_time = time.time()
+    a, b, c = [float(num) for num in mensagem.text.split()]
+    resposta = f'As raízes de {a}x²+{b}x+{c} são:\n{eq2grau.eq2grau(a, b, c)}\n\ntempo de execução: {time.time() - start_time:.3f} s'
+    bot.send_message(mensagem.chat.id, resposta)
+    bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
+
+
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'informações' else False)
 @bot.message_handler(commands=['informacoes'])
 def informacoes(mensagem):
@@ -106,19 +128,22 @@ def responder(mensagem):
     *MENU INICIAL*
 
     /trigonometria Fornece informações a respeito de algum ângulo fornecido.
-    /calcularprimos Calcula todos os primos num intervalo fechado [[a, b]].
     /fatorial Calcula o fatorial de um número x.
+    /calcularprimos Calcula todos os primos num intervalo fechado [[a, b]].
+    /eq2grau Calcula as raízes de um polinômio de grau 2.
     /informacoes
     """
     markup = types.ReplyKeyboardMarkup()
     itembtn1 = types.KeyboardButton('Trigonometria')
     itembtn2 = types.KeyboardButton('Fatorial')
     itembtn3 = types.KeyboardButton('Calcular Primos')
-    itembtn4 = types.KeyboardButton('informações')
+    itembtn4 = types.KeyboardButton('Equação 2° grau')
+    itembtn5 = types.KeyboardButton('informações')
     markup.row(itembtn1)
     markup.row(itembtn2)
     markup.row(itembtn3)
     markup.row(itembtn4)
+    markup.row(itembtn5)
     bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown', reply_markup=markup)
 
 
