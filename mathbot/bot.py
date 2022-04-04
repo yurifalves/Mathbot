@@ -47,8 +47,9 @@ def primos1(mensagem):
 
 
 def primos2(mensagem):
+    start_time = time.time()
     primo1, primo2 = [int(num) for num in mensagem.text.split()]
-    resposta = primos.checarintervalo(primo1, primo2, mensagem.chat.id)
+    resposta = f'{primos.checarintervalo(primo1, primo2, mensagem.chat.id)}\n\n\ntempo de execução: {time.time() - start_time:.3f} s'
     if len(resposta) <= 4096:
         bot.send_message(mensagem.chat.id, resposta)
     else:
@@ -57,7 +58,7 @@ def primos2(mensagem):
         ref_arquivo = open(f'primos({primo1}-{primo2}).txt', mode='w')
         ref_arquivo.write(resposta)
         ref_arquivo.close()
-        bot.send_document(mensagem.chat.id, open(f'primos({primo1}-{primo2}).txt', mode='rb'))
+        bot.send_document(mensagem.chat.id, open(f'primos({primo1}-{primo2}).txt', mode='rb'), caption=f'tempo de execução: {time.time() - start_time:.3f} s')
         os.remove(f'primos({primo1}-{primo2}).txt')
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
