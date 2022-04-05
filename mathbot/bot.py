@@ -56,7 +56,7 @@ def primos2(mensagem):
         bot.send_message(mensagem.chat.id,
                          f'Tamanho da resposta muito grande ( >= 4096 caracteres ),\no resultado estará no .txt abaixo:')
         ref_arquivo = open(f'primos({primo1}-{primo2}).txt', mode='w')
-        ref_arquivo.write(f'{primos.checarintervalo(primo1, primo2, mensagem.chat.id)}')
+        ref_arquivo.write(resposta)
         ref_arquivo.close()
         bot.send_document(mensagem.chat.id, open(f'primos({primo1}-{primo2}).txt', mode='rb'), caption=f'tempo de execução: {time.time() - start_time:.3f} s')
         os.remove(f'primos({primo1}-{primo2}).txt')
