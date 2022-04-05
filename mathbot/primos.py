@@ -12,7 +12,7 @@ def checarintervalo(a, b, chatid):
     if a < 0 or a > b:
         return f'Alguma condição está sendo violada: a < 0 ou a < b'
     else:
-        bot_bob = TelegramBot('5232695368:AAH_CQAYVlI0TVEas8XSppXvBOA1wY1LjY4', chatid)
+        bot_bob = TelegramBot(TOKEN, chatid)
         pb = TelegramTqdm(bot_bob)
         
         def is_prime(n):
