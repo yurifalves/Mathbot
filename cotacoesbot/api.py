@@ -1,17 +1,11 @@
+import requests
+
 def currency_api(key):
     """
     Currencyapi --> https://app.currencyapi.com/
     :param key: API Key.
     :return: String com as cotações de todas as moedas disponíveis na API.
     """
-    import requests
-    res = requests.get(f'https://api.currencyapi.com/v3/latest?apikey={key}&base_currency=BRL').json()
-    last_updated = res['meta']['last_updated_at']
-    moedas = [moeda for moeda in res['data']]
-    quantidade_moedas = len([moeda for moeda in res['data']])
-    texto1 = f'{quantidade_moedas} Moedas\n({last_updated})\n\n'  # Moedas importantes
-    texto2 = str()  # Moedas Secundárias
-
     moedas_all = {
         'USD': 'Dólar Americano',
         'EUR': 'Euro',
@@ -37,15 +31,13 @@ def currency_api(key):
         'BHD': 'Dinar bareinita',
         'BIF': 'Franco burundiano',
         'BMD': 'Dólar bermudense',
-        'BND': '?????',
+        'BND': 'Dólar bruneano',
         'BOB': 'Boliviano da Bolívia',
         'BRL': 'Real Brasileiro',
         'BSD': 'Dólar bahamense',
-        'BTC': '?????',
         'BTN': 'Ngultrum butanês',
         'BWP': 'Pula botsuanesa',
         'BYN': 'Rublo bielorrusso',
-        'BYR': '?????',
         'BZD': 'Dólar belizenho',
         'CDF': 'Franco congolês',
         'CLF': 'Unidades de Fomento chilenas',
@@ -96,8 +88,8 @@ def currency_api(key):
         'LKR': 'Rupia cingalesa',
         'LRD': 'Dólar Liberiano',
         'LSL': 'Loti lesotiano',
-        'LTL': '???????',
-        'LVL': '???????',
+        'LTL': 'Litas lituano',
+        'LVL': 'Lats letão',
         'LYD': 'Dinar líbio',
         'MAD': 'Dirham marroquino',
         'MDL': 'Leu moldávio',
@@ -136,18 +128,18 @@ def currency_api(key):
         'SDG': 'Libra Sudanesa',
         'SEK': 'Coroa sueca',
         'SGD': 'Dólar singapuriano',
-        'SHP': '????',
+        'SHP': 'Libra de Santa Helena',
         'SLL': 'Leone de Serra Leoa',
         'SOS': 'Xelim somali',
         'SRD': 'Dólar surinamês',
-        'STD': '?????',
+        'STD': 'Dobra de São Tomé e Príncipe',
         'SVC': 'Colom salvadorenho',
         'SZL': 'Lilangeni suazi',
         'THB': 'Baht tailandês',
         'TJS': 'Somoni',
         'TMT': 'Manat turcomano',
         'TND': 'Dinar tunisiano',
-        'TOP': '?????',
+        'TOP': 'Paʻanga tonganesa',
         'TRY': 'Lira turca',
         'TTD': 'Dólar de Trinidad e Tobago',
         'TWD': 'Novo dólar taiwanês',
@@ -159,15 +151,23 @@ def currency_api(key):
         'VND': 'Dong vietnamita',
         'XAF': 'Franco CFA Central',
         'XCD': 'Dólar do Caribe Oriental',
-        'XDR': '?????',
         'XOF': 'Franco CFA ocidental',
         'XPF': 'Franco CFP',
         'YER': 'Rial iemenita',
         'ZAR': 'Rand sul-africano',
         'ZMK': 'Kwacha zambiano',
         'ZMW': 'Kwacha zambiano',
-        'ZWL': '?????'
-                }
+        'ZWL': 'Dólar do Zimbabwe'
+    }
+
+    res = requests.get(f'https://api.currencyapi.com/v3/latest?apikey={key}&base_currency=BRL').json()
+    last_updated = res['meta']['last_updated_at']
+    moedas = [moeda for moeda in res['data']]
+    quantidade_moedas = len(moedas_all)
+    texto1 = f'{quantidade_moedas} Moedas\n({last_updated})\n\n'  # Moedas importantes
+    texto2 = str()  # Moedas Secundárias
+
+
 
     c = 0
     while c < quantidade_moedas:
@@ -178,4 +178,5 @@ def currency_api(key):
         else:
             texto2 += f'1 {code} = R$ {valor}\n'
         c += 1
+
     return texto1 + texto2
