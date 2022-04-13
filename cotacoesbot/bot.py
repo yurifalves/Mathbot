@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
-import apis
+import time
+import os
 
 
 bot = telebot.TeleBot(TOKEN)
@@ -10,7 +11,14 @@ bot = telebot.TeleBot(TOKEN)
 @bot.message_handler(commands=['currencyapi'])
 def currencyapi(mensagem):
     markup = types.ReplyKeyboardRemove(selective=False)
-    bot.send_message(mensagem.chat.id, apis.currency_api(key), parse_mode='Markdown', reply_markup=markup)
+    bot.send_message(mensagem.chat.id, f'Tamanho da resposta muito grande ( >= 4096 caracteres ),\no resultado estará no .txt abaixo:', reply_markup=markup)
+    start_time = time.time()
+    ref_arquivo = open('cotacao-awesomeapi.txt', mode='w')
+    ref_arquivo.write(currency_api(key))
+    ref_arquivo.close()
+    bot.send_document(mensagem.chat.id, open(f'cotacao-awesomeapi.txt', mode='rb'), caption=f'tempo de execução: {time.time() - start_time:.3f} s')
+    os.remove('cotacao-awesomeapi.txt')
+    bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
 
 @bot.message_handler(func=lambda mensagem: True)
