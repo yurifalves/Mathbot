@@ -1,5 +1,7 @@
 import telebot
 from telebot import types
+import apis
+
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -8,14 +10,14 @@ bot = telebot.TeleBot(TOKEN)
 @bot.message_handler(commands=['currencyapi'])
 def currencyapi(mensagem):
     markup = types.ReplyKeyboardRemove(selective=False)
-    bot.send_message(mensagem.chat.id, currencyapi.currencyapi(KEY), parse_mode='Markdown', reply_markup=markup)
+    bot.send_message(mensagem.chat.id, apis.currency_api(key), parse_mode='Markdown', reply_markup=markup)
 
 
 @bot.message_handler(func=lambda mensagem: True)
 def responder(mensagem):
     texto_padrao = """
     *MENU INICIAL*
-    /currencyapi
+    /currencyapi Consultar cotações usando Currencyapi
     /informacoes
     """
     markup = types.ReplyKeyboardMarkup()
