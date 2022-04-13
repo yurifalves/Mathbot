@@ -1,11 +1,11 @@
-def currencyapi(KEY):
+def currency_api(key):
     """
     Currencyapi --> https://app.currencyapi.com/
-    :param KEY: API Key.
+    :param key: API Key.
     :return: String com as cotações de todas as moedas disponíveis na API.
     """
     import requests
-    res = requests.get(f'https://api.currencyapi.com/v3/latest?apikey={KEY}&base_currency=BRL').json()
+    res = requests.get(f'https://api.currencyapi.com/v3/latest?apikey={key}&base_currency=BRL').json()
     last_updated = res['meta']['last_updated_at']
     moedas = [moeda for moeda in res['data']]
     quantidade_moedas = len([moeda for moeda in res['data']])
@@ -32,4 +32,3 @@ def currencyapi(KEY):
             texto2 += f'1 {code} = R$ {valor}\n'
         c += 1
     return texto1 + texto2
-  
