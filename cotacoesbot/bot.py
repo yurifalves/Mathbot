@@ -14,11 +14,11 @@ def currencyapi(mensagem):
     markup = types.ReplyKeyboardRemove(selective=False)
     bot.send_message(mensagem.chat.id, f'Tamanho da resposta muito grande ( >= 4096 caracteres ),\no resultado estará no .txt abaixo:', reply_markup=markup)
     start_time = time.time()
-    ref_arquivo = open('cotacao-awesomeapi.txt', mode='w')
+    ref_arquivo = open('cotacao-currencyapi.txt', mode='w')
     ref_arquivo.write(apis.currency_api(key))
     ref_arquivo.close()
-    bot.send_document(mensagem.chat.id, open(f'cotacao-awesomeapi.txt', mode='rb'), caption=f'tempo de execução: {time.time() - start_time:.3f} s')
-    os.remove('cotacao-awesomeapi.txt')
+    bot.send_document(mensagem.chat.id, open(f'cotacao-currencyapi.txt', mode='rb'), caption=f'tempo de execução: {time.time() - start_time:.3f} s')
+    os.remove('cotacao-currencyapi.txt')
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
 
