@@ -110,7 +110,7 @@ def eq2grau1(mensagem):
 def eq2grau2(mensagem):
     start_time = time.time()
     a, b, c = [float(num) for num in mensagem.text.split()]
-    resposta = f'As raízes de {a}x²+{b}x+{c} são:\n{eq2grau.eq2grau(a, b, c)}\n\ntempo de execução: {time.time() - start_time:.3f} s'
+    resposta = f'{eq2grau.eq2grau(a, b, c)}\n\ntempo de execução: {time.time() - start_time:.3f} s'
     bot.send_message(mensagem.chat.id, resposta)
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
