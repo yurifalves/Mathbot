@@ -6,11 +6,11 @@ def eq2grau(a, b, c):
     if x1.imag == 0:
         x1 = x1.real
     else:
-        x1 = f'{x1.real} + {x1.imag}i'
+        x1 = f'{x1.real}+{x1.imag}i'
     if x2.imag == 0:
         x2 = x2.real
     else:
-        x2 = f'{x2.real} + {x2.imag}i'
+        x2 = f'{x2.real}+{x2.imag}i'
     return f'{equacao}\nx1 = {x1}, x2 = {x2}'
 
 
