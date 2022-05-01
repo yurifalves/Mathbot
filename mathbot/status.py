@@ -2,7 +2,7 @@ def verificar_conexao():
     try:
         import speedtest
         st = speedtest.Speedtest()
-        saida = f'Download: {st.download() / 1024 ** 2:.2f} Mb/s\nUpload: {st.upload() / 1024 ** 2:.2f} Mb/s\nPing: {st.results.ping} ms\nOUTRAS INFORMAÇÕES: {st.results.client}'
+        saida = f'Download: {st.download() / 1024 ** 2:.2f} Mb/s\nUpload: {st.upload() / 1024 ** 2:.2f} Mb/s\nPing: {st.results.ping} ms'
         return saida
     except Exception as e:
         return e
