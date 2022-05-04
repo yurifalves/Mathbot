@@ -1,11 +1,12 @@
 import telebot
 from telebot import types
+from bot import Bot
 import os
 import math
 import time
 import primos, trigonometria, eq2grau
 
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot(Bot.token())
 
 
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Trigonometria' else False)
