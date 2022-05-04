@@ -1,6 +1,8 @@
 import telebot
 from telebot import types
 from bot import Bot
+import logging
+import sys
 import os
 import math
 import time
@@ -23,8 +25,17 @@ def trigonometria1(mensagem):
 
 
 def trigonometria2(mensagem):
-    start_time = time.time()
-    angulo = int(mensagem.text)
+    try:
+        start_time = time.time()
+        angulo = int(mensagem.text)
+    except:
+        msg_erro = """
+Erro detectado - Mensagem fora do formato.\n
+/trigonometria Para tentar novamente
+/menu Voltar ao menu inicial
+"""
+        bot.reply_to(mensagem, msg_erro)
+
     ref_arquivo = trigonometria.grafico(angulo)
     resposta = trigonometria.trig(angulo) + f'\ntempo de execução: {time.time() - start_time:.3f} s'
     bot.send_photo(mensagem.chat.id, ref_arquivo)
@@ -48,8 +59,17 @@ def primos1(mensagem):
 
 
 def primos2(mensagem):
-    start_time = time.time()
-    primo1, primo2 = [int(num) for num in mensagem.text.split()]
+    try:
+        start_time = time.time()
+        primo1, primo2 = [int(num) for num in mensagem.text.split()]
+    except:
+        msg_erro = """
+Erro detectado - Mensagem fora do formato.\n
+/calcularprimos Para tentar novamente
+/menu Voltar ao menu inicial
+"""
+        bot.reply_to(mensagem, msg_erro)
+
     resposta = f'{primos.checarintervalo(primo1, primo2, mensagem.chat.id)}\n\n\ntempo de execução: {time.time() - start_time:.3f} s'
     if len(resposta) <= 4096:
         bot.send_message(mensagem.chat.id, resposta)
@@ -68,9 +88,9 @@ def primos2(mensagem):
 @bot.message_handler(commands=['fatorial'])
 def fatorial1(mensagem):
     texto_inicial = """
-    Envie algum número, no formato *num*\n
-    Ex: '10982' (sem as aspas)
-    equivale a solicitar o fatorial do número 10982.
+Envie algum número, no formato *num*\n
+Ex: '10982' (sem as aspas)
+equivale a solicitar o fatorial do número 10982.
     """
     markup = types.ReplyKeyboardRemove(selective=False)
     sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown', reply_markup=markup)
@@ -78,8 +98,17 @@ def fatorial1(mensagem):
 
 
 def fatorial2(mensagem):
-    start_time = time.time()
-    num = int(mensagem.text)
+    try:
+        start_time = time.time()
+        num = int(mensagem.text)
+    except:
+        msg_erro = """
+Erro detectado - Mensagem fora do formato.\n
+/fatorial Para tentar novamente
+/menu Voltar ao menu inicial
+    """
+        bot.reply_to(mensagem, msg_erro)
+
     resposta = f'{num}! =\n{math.factorial(num)}\n\ntempo de execução: {time.time() - start_time:.3f} s'
     if len(str(resposta)) <= 4096:
         bot.send_message(mensagem.chat.id, resposta)
@@ -109,8 +138,17 @@ def eq2grau1(mensagem):
 
 
 def eq2grau2(mensagem):
-    start_time = time.time()
-    a, b, c = [float(num) for num in mensagem.text.split()]
+    try:
+        start_time = time.time()
+        a, b, c = [float(num) for num in mensagem.text.split()]
+    except:
+        msg_erro = """
+Erro detectado - Mensagem fora do formato.\n
+/eq2grau Para tentar novamente
+/menu Voltar ao menu inicial
+        """
+        bot.reply_to(mensagem, msg_erro)
+
     resposta = f'{eq2grau.eq2grau(a, b, c)}\n\ntempo de execução: {time.time() - start_time:.3f} s'
     bot.send_message(mensagem.chat.id, resposta)
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
@@ -127,12 +165,12 @@ def informacoes(mensagem):
 @bot.message_handler(func=lambda mensagem: True)
 def responder(mensagem):
     texto_padrao = """
-    *MENU INICIAL*
-    /trigonometria Fornece informações a respeito de algum ângulo fornecido.
-    /fatorial Calcula o fatorial de um número x.
-    /calcularprimos Calcula todos os primos num intervalo fechado [[a, b]].
-    /eq2grau Calcula as raízes de um polinômio de grau 2.
-    /informacoes
+*MENU INICIAL*\n
+/trigonometria Fornece informações a respeito de algum ângulo fornecido
+/fatorial Calcula o fatorial de um número x
+/calcularprimos Calcula todos os primos num intervalo fechado [[a, b]]
+/eq2grau Calcula as raízes de um polinômio de grau 2
+/informacoes
     """
     markup = types.ReplyKeyboardMarkup()
     itembtn1 = types.KeyboardButton('Trigonometria')
@@ -148,4 +186,9 @@ def responder(mensagem):
     bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown', reply_markup=markup)
 
 
-bot.polling()
+while True:
+    try:
+        bot.polling(none_stop=True)
+    except Exception:
+        logging.error(f'{sys.exc_info()[0]}\n({time.ctime()})\n')
+        time.sleep(5)
