@@ -9,12 +9,13 @@ def checarintervalo(a, b, chatid):
     """
     from bob_telegram_tools.utils import TelegramTqdm
     from bob_telegram_tools.bot import TelegramBot
+    from bot import Bot
     if a < 0 or a > b:
         return f'Alguma condição está sendo violada: a < 0 ou a < b'
     else:
-        bot_bob = TelegramBot(TOKEN, chatid)
+        bot_bob = TelegramBot(Bot.token(), chatid)
         pb = TelegramTqdm(bot_bob)
-        
+
         def is_prime(n):
             if n == 2 or n == 3: return True
             if n < 2 or n % 2 == 0: return False
@@ -27,5 +28,6 @@ def checarintervalo(a, b, chatid):
                 if n % (f + 2) == 0: return False
                 f += 6
             return True
+
         listaprimos = [n for n in pb(range(a, b + 1)) if is_prime(n)]
         return f'Considerando o intervalo [{a}, {b}]\n\n-NÚMEROS PRIMOS: {listaprimos}'
