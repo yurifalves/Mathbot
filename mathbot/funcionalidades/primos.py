@@ -5,7 +5,7 @@ def checarintervalo(a, b, chatid):
     :param a: Início do intervalo a ser analisado.
     :param b: Fim do Intervalo a ser analisado.
     :param chatid: ID do chat no qual o bot está enviando a mensagem.
-    :return: 2 listas, uma com os números primos e outra com os números compostos. Abaixo aparecerá o tempo de execução.
+    :return: Lista com os números primos encontrados em [a, b].
     """
     from bob_telegram_tools.utils import TelegramTqdm
     from bob_telegram_tools.bot import TelegramBot
