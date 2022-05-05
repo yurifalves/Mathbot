@@ -6,7 +6,7 @@ import sys
 import os
 import math
 import time
-import primos, trigonometria, eq2grau
+from funcionalidades import primos, trigonometria, eq2grau
 
 bot = telebot.TeleBot(Bot.token())
 
