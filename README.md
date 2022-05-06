@@ -23,4 +23,4 @@
 `/calcularprimos` ou `Calcular Primos` (Calcula os números primos num intervalo fechado [a, b], ambos inteiros positivos e a ≤ b)<br>
 `/trigonometria` ou `Trigonometria` (Calcula o sen, cos, tg de um ângulo e devolve além disso o gráfico com os pontos)<br>
 `/fatorial` ou `Fatorial` (Calcula o fatorial de um número)<br>
-`eq2grau` ou `Fatorial` (Calcula as raízes de um polinômio de grau 2)<br>
+`/eq2grau` ou `Fatorial` (Calcula as raízes de um polinômio de grau 2)<br>
