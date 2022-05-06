@@ -157,7 +157,7 @@ Erro detectado - Mensagem fora do formato.\n
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'informações' else False)
 @bot.message_handler(commands=['informacoes'])
 def informacoes(mensagem):
-    link = 'https://github.com/yurifalves/telegrambots/tree/main/mathbot'
+    link = 'https://github.com/yurifalves/Mathbot'
     markup = types.ReplyKeyboardRemove(selective=False)
     bot.send_message(mensagem.chat.id, f'O Bot ainda está em desenvolvimento.\nRepositório: {link}', reply_markup=markup)
 
