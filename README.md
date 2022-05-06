@@ -16,6 +16,7 @@
 
 # Como utilizar o bot?
 
+Antes de tudo, certifique-se de executar no terminal o comando `pip install -r requirements.txt` (para instalar todas as bibliotecas, módulos e pacotes necessários)
 1. **Clique [aqui](https://github.com/yurifalves/telegrambots/archive/refs/heads/main.zip) para fazer o download do projeto.**
 2. **Extraia o .zip baixado e procure pela pasta mathbot que é onde os arquivos do bot estão.**
 3. **Abra o arquivo `bot.py`, e na linha 5 coloque a string equivalente ao token do bot,<br>Ex: `'telegramtoken = 0123456789:ABC_DEFGHIJ0KLMno8PQrsTuVWX1zZ1ZzZ4'`.**
