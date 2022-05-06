@@ -17,7 +17,7 @@
 # Como utilizar o bot?
 
 1. **Clique [aqui](https://github.com/yurifalves/telegrambots/archive/refs/heads/main.zip) para fazer o download do projeto.**
-2. **Extraia o arquivo baixado e procure pela pasta mathbot que é onde os arquivos do bot estão.**
+2. **Extraia o .zip baixado e procure pela pasta mathbot que é onde os arquivos do bot estão.**
 3. **Abra o arquivo `bot.py`, e na linha 5 coloque a string equivalente ao token do bot,<br>Ex: `'telegramtoken = 0123456789:ABC_DEFGHIJ0KLMno8PQrsTuVWX1zZ1ZzZ4'`.**
 4. **Execute o código e utilize as funcionalidades via chat do telegram.**<br>
 `/calcularprimos` ou `Calcular Primos` (Calcula os números primos num intervalo fechado [a, b], ambos inteiros positivos e a ≤ b)<br>
