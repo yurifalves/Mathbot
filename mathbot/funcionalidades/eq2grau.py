@@ -1,7 +1,8 @@
 def eq2grau(a, b, c):
-    from cmath import sqrt
+    import math
+    import cmath
+    
     a_eq, b_eq, c_eq = str(a).replace('.', ','), str(b).replace('.', ','), str(c).replace('.', ',')
-
     if '-' in str(b) and '-' in str(c):
         equacao = f'{a_eq}x²{b_eq}x{c_eq}'
     if '-' in str(b) and '-' not in str(c):
@@ -17,7 +18,10 @@ def eq2grau(a, b, c):
         x2 = str(x2).replace('.', ',')
     else:
         discriminante = b ** 2 - 4*a*c
-        x1, x2 = (-b + sqrt(discriminante)) / (2*a), (-b - sqrt(discriminante)) / (2*a)
+        try:
+            x1, x2 = (-b + math.sqrt(discriminante)) / (2 * a), (-b - math.sqrt(discriminante)) / (2 * a)
+        except Exception:
+            x1, x2 = (-b + cmath.sqrt(discriminante)) / (2*a), (-b - cmath.sqrt(discriminante)) / (2*a)
         x1 = str(x1).replace('(', '').replace(')', '').replace('.', ',').replace('j', 'i')
         x2 = str(x2).replace('(', '').replace(')', '').replace('.', ',').replace('j', 'i')
 
@@ -25,4 +29,4 @@ def eq2grau(a, b, c):
 
 
 if __name__ == '__main__':
-    print(eq2grau(4.43294832, 4.4329432, 2.432423))
+    print(eq2grau(1, 0, 0))
