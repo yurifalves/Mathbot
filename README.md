@@ -19,7 +19,7 @@
 Antes de tudo, certifique-se de executar no terminal o comando `pip install -r requirements.txt` (para instalar todas as bibliotecas, módulos e pacotes necessários)
 1. **Clique [aqui](https://github.com/yurifalves/telegrambots/archive/refs/heads/main.zip) para fazer o download do projeto.**
 2. **Extraia o .zip baixado e procure pela pasta mathbot que é onde os arquivos do bot estão.**
-3. **Abra o arquivo `bot.py`, e preencha com as strings necessárias para o funcionamento do bot.<br>Ex: `'telegramtoken = 0123456789:ABC_DEFGHIJ0KLMno8PQrsTuVWX1zZ1ZzZ4'`.**
+3. **Abra o arquivo `bot.py`, e preencha todas strings necessárias para o funcionamento do bot.<br>Ex: `'telegramtoken = 0123456789:ABC_DEFGHIJ0KLMno8PQrsTuVWX1zZ1ZzZ4'`.**
 4. **Execute o código e utilize as funcionalidades via chat do telegram.**<br>
 `/calcularprimos` ou `Calcular Primos` (Calcula os números primos num intervalo fechado [a, b], ambos inteiros positivos e a ≤ b)<br>
 `/trigonometria` ou `Trigonometria` (Calcula o sen, cos, tg de um ângulo e devolve além disso o gráfico com os pontos)<br>
