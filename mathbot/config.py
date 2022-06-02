@@ -6,7 +6,7 @@ import sys
 import os
 import math
 import time
-from funcionalidades import primos, trigonometria, eq2grau
+from funcionalidades import primos, trigonometria, eq2grau, numaleatorios
 
 bot = telebot.TeleBot(Bot.token())
 
@@ -154,6 +154,39 @@ Erro detectado - Mensagem fora do formato.\n
     bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
 
 
+@bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Números Aleatórios' else False)
+@bot.message_handler(commands=['numaleatorios'])
+def numaleatorios_1(mensagem):
+    texto_inicial = """
+    Envie um mensagem no formato:
+    *n min max*
+    *n* - Quantos números inteiros. Deve estar dentro do intervalo [[1, 10000]].
+    *min* e *max* - Limites inferior/superior do intervalo. Deve estar dentro do intervalo [[-1000000000, 1000000000]].
+    
+    Ex: '7 13 19' (sem as aspas)
+    Resultado --> [[17, 17, 15, 18, 14, 13, 18]]
+    Isso equivale a solicitar 7 números aleatórios dentro do intervalo fechado [[13, 19]].
+    """
+    markup = types.ReplyKeyboardRemove(selective=False)
+    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown', reply_markup=markup)
+    bot.register_next_step_handler(sent_msg, numaleatorios_2)
+
+
+def numaleatorios_2(mensagem):
+    try:
+        n, min, max = [int(num) for num in mensagem.text.split()]
+        resposta = numaleatorios.gerar_inteiros(Bot.random_api(), n, min, max)
+        bot.send_message(mensagem.chat.id, resposta)
+        bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
+    except:
+        msg_erro = """
+Erro detectado - Mensagem fora do formato.\n
+/numaleatorios Para tentar novamente
+/menu Voltar ao menu inicial
+"""
+        bot.reply_to(mensagem, msg_erro)
+
+
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'informações' else False)
 @bot.message_handler(commands=['informacoes'])
 def informacoes(mensagem):
@@ -170,6 +203,7 @@ def responder(mensagem):
 /fatorial Calcula o fatorial de um número x
 /calcularprimos Calcula todos os primos num intervalo fechado [[a, b]]
 /eq2grau Calcula as raízes de um polinômio de grau 2
+/numaleatorios Retorna uma lista de números aleatórios
 /informacoes
     """
     markup = types.ReplyKeyboardMarkup()
@@ -177,12 +211,14 @@ def responder(mensagem):
     itembtn2 = types.KeyboardButton('Fatorial')
     itembtn3 = types.KeyboardButton('Calcular Primos')
     itembtn4 = types.KeyboardButton('Equação 2° grau')
-    itembtn5 = types.KeyboardButton('informações')
+    itembtn5 = types.KeyboardButton('Números Aleatórios')
+    itembtn6 = types.KeyboardButton('informações')
     markup.row(itembtn1)
     markup.row(itembtn2)
     markup.row(itembtn3)
     markup.row(itembtn4)
     markup.row(itembtn5)
+    markup.row(itembtn6)
     bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown', reply_markup=markup)
 
 
