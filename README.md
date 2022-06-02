@@ -1,6 +1,6 @@
 # Mathbot
 
-#### Telegram bot criado por [Yuri](https://github.com/yurifalves)
+#### Telegram bot com algumas funções matemáticas.
 
 # Tecnologias utilizadas
 
@@ -25,3 +25,4 @@ Antes de tudo, certifique-se de executar no terminal o comando `pip install -r r
 `/trigonometria` ou `Trigonometria` (Calcula o sen, cos, tg de um ângulo e devolve além disso o gráfico com os pontos)<br>
 `/fatorial` ou `Fatorial` (Calcula o fatorial de um número)<br>
 `/eq2grau` ou `Fatorial` (Calcula as raízes de um polinômio de grau 2)<br>
+`/numaleatorios` ou `Números Aleatórios` (Retorna um conjunto de [números aleatórios](https://www.random.org/))<br>
