@@ -3,13 +3,13 @@ from scipy import linalg
 
 
 def formatar_matriz(matriz: np.ndarray) -> str:
-    matriz_formatada = np.array2string(matriz, separator='  ')[1:-1].replace(' [', '[').replace('.', ',')
+    matriz_formatada = np.array2string(matriz, separator='  ')[1:-1].replace(' [', '[')
     return matriz_formatada
 
 
 texto1 = """
-[2 1]
-[1 3]
+[3 5 7 0 8 1]
+[1 2 8 9 11]
 """
 
 
@@ -43,14 +43,17 @@ class Matriz:
             matriz_inversa = linalg.inv(self._matriz, overwrite_a=True, check_finite=False)
             return formatar_matriz(matriz_inversa)
         except Exception:
-            return 'Ocorreu algo errado'
+            return 'Nâo foi possível realizar a operação'
+
+    def matriz_transposta(self):
+        return self._matriz.T
 
     def determinante(self):
         try:
             determinante = linalg.det(self._matriz, overwrite_a=True, check_finite=False)
             return determinante
         except Exception:
-            return 'Ocorreu algo errado'
+            return 'Nâo foi possível realizar a operação'
 
 
-print(Matriz(texto1).matriz_inversa())
+print(Matriz(texto1).matriz_transposta())
