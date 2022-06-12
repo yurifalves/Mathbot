@@ -28,9 +28,10 @@ class Matriz:
     """
 
     def __init__(self, texto):
+        lista_numeros = []
         for caractere in texto:
-            indice_caractere = texto.index(caractere)
-            if caractere.isdecimal(): texto = texto.replace(caractere, f'{caractere},', 1)
+            if caractere.isdecimal() and caractere not in lista_numeros: texto = texto.replace(caractere, f'{caractere},')
+            lista_numeros.append(caractere)
 
         texto = eval('[' + texto.replace(']', '],') + ']')
         self._matriz = np.array(texto)
@@ -50,3 +51,6 @@ class Matriz:
             return determinante
         except Exception:
             return 'Ocorreu algo errado'
+
+
+print(Matriz(texto1).matriz_inversa())
