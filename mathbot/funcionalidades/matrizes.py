@@ -10,8 +10,7 @@ def formatar_matriz(matriz: np.ndarray) -> str:
     :param matriz: array 2-D.
     :return: O array convertido e formatado em string.
     """
-    matriz_formatada = np.array2string(matriz, separator='  ')[1:-1].replace(' [', '[')
-    return matriz_formatada
+    return np.array2string(matriz, separator='  ')[1:-1].replace(' [', '[')
 
 
 class Matriz:
@@ -26,14 +25,12 @@ class Matriz:
               .
     [am1 am2 am3 ... amn]
 
-
-
     """
 
-    def __init__(self, texto):
+    def __init__(self, texto: str):
         lista_numeros = []
         for caractere in texto:
-            if caractere.isdecimal() and caractere not in lista_numeros: texto = texto.replace(caractere, f'{caractere},')
+            if (caractere.isdecimal() and caractere not in lista_numeros) and (not texto[texto.index(caractere)+1].isdecimal()): texto = texto.replace(caractere, f'{caractere},')
             lista_numeros.append(caractere)
 
         texto = eval('[' + texto.replace(']', '],') + ']')
@@ -86,9 +83,10 @@ class Matriz:
             return 'Algum erro ocorreu. Tente novamente.'
 
 
-texto_teste = """
-[3 5 8]
-[1 2 2]
-"""
-A = Matriz(texto_teste)
-print(A.solucao_sistemalinear())
+if __name__ == '__main__':
+    texto = """
+    [1 1 1]
+    [1 1 1]
+    """
+    A = Matriz(texto)
+    print(A.solucao_sistemalinear())
