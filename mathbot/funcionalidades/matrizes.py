@@ -7,17 +7,10 @@ def formatar_matriz(matriz: np.ndarray) -> str:
     return matriz_formatada
 
 
-texto1 = """
-[3 5 7 0 8 1]
-[1 2 8 9 11]
-"""
-
-
 class Matriz:
     """
-    formato do texto:
+    formato da string:
 
-    Uma matriz de ordem m x n, aij ∈ ℝ
     [a11 a12 a13 ... a1n]
     [a21 a22 a23 ... a2n]
     [a31 a32 a33 ... a3n]
@@ -25,6 +18,9 @@ class Matriz:
               .
               .
     [am1 am2 am3 ... amn]
+
+
+
     """
 
     def __init__(self, texto):
@@ -55,5 +51,37 @@ class Matriz:
         except Exception:
             return 'Nâo foi possível realizar a operação'
 
+    def solucao_sistemalinear(self):
+        """
+        Ax = b
+        A: Matriz de coeficientes
+        b: Vetor coluna
+        x: Resposta procurada
 
-print(Matriz(texto1).matriz_transposta())
+        Só funcionará para uma matriz de ordem m x n, com m=n-1
+
+        :return: Matriz reduzida por linhas.
+        """
+        try:
+            A = self._matriz  # Matriz aumentada
+            num_linhas, num_colunas = A.shape[0], A.shape[1]
+            b = A[:, num_colunas-1:].T[0]
+            A = A[:, 0:num_colunas-1]
+
+            x = linalg.solve(A, b, overwrite_a=True, overwrite_b=True)  # array([x1, x2, x3, ...])
+
+            solucao = str()
+            for i in range(x.size):
+                solucao += f'x{i + 1} = {x[i]}\n'
+
+            return solucao
+        except Exception:
+            return 'Algum erro ocorreu. Tente novamente.'
+
+
+texto_teste = """
+[3 5 8]
+[1 2 2]
+"""
+A = Matriz(texto_teste)
+print(A.solucao_sistemalinear())
