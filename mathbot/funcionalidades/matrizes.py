@@ -46,7 +46,7 @@ class Matriz:
             return 'Nâo foi possível realizar a operação'
 
     def matriz_transposta(self):
-        return self._matriz.T
+        return formatar_matriz(self._matriz.T)
 
     def determinante(self):
         try:
