@@ -3,6 +3,13 @@ from scipy import linalg
 
 
 def formatar_matriz(matriz: np.ndarray) -> str:
+    """
+    np.array([[a11, a12, a13],       '[a11  a12  a13]
+              [a21, a22, a23],  --->  [a21  a22  a23]
+              [a31, a32, a33]])       [a31  a32  a33]'
+    :param matriz: ndarray
+    :return: O array convertido e formatado em string.
+    """
     matriz_formatada = np.array2string(matriz, separator='  ')[1:-1].replace(' [', '[')
     return matriz_formatada
 
