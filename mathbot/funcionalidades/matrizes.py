@@ -94,33 +94,6 @@ class Matriz:
         except Exception:
             return 'Nâo foi possível realizar a operação'
 
-    def solucao_sistemalinear(self):
-        """
-        Ax = b
-        A: Matriz de coeficientes
-        b: Vetor coluna
-        x: Resposta procurada
-
-        Só funcionará para uma matriz de ordem m x n, com m=n-1
-
-        :return: Matriz reduzida por linhas.
-        """
-        try:
-            A = self._matriz  # Matriz aumentada
-            num_linhas, num_colunas = A.shape[0], A.shape[1]
-            b = A[:, num_colunas - 1:].T[0]
-            A = A[:, 0:num_colunas - 1]
-
-            x = linalg.solve(A, b, overwrite_a=True, overwrite_b=True)  # array([x1, x2, x3, ...])
-
-            solucao = str()
-            for i in range(x.size):
-                solucao += f'x{i + 1} = {x[i]}\n'
-
-            return solucao
-        except Exception:
-            return 'Algum erro ocorreu. Tente novamente.'
-
 
 if __name__ == '__main__':
     pass
