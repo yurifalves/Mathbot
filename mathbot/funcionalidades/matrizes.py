@@ -2,7 +2,7 @@ import numpy as np
 from scipy import linalg
 
 
-def texto_para_matriz(texto):
+def texto_para_matriz(texto:str) -> np.ndarray:
     """
 
     Converte um texto para uma matriz, eliminando espaços e quebras de linha em excesso.
