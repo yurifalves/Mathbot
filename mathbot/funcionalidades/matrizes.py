@@ -4,7 +4,6 @@ from scipy import linalg
 
 def texto_para_matriz(texto:str) -> np.ndarray:
     """
-
     Converte um texto para uma matriz, eliminando espaços e quebras de linha em excesso.
 
     Ex:
@@ -15,9 +14,8 @@ def texto_para_matriz(texto:str) -> np.ndarray:
     7 8 9   1                        [7, 8, 9, 1]])
     '''
 
-    :param texto: string a ser convertida
-    :return: matriz
-
+    :param texto: String a ser convertida.
+    :return: array 2-D.
     """
     texto = texto.strip().replace(',', '.')
 
@@ -53,7 +51,6 @@ class Matriz:
               .
               .
     [am1 am2 am3 ... amn]
-
     """
 
     def __init__(self, texto: str):
