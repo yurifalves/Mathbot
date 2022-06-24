@@ -29,8 +29,7 @@ def texto_para_matriz(texto):
 
     """
     texto = texto.strip().replace(',', '.')
-    
-    
+
     def remove_element(element, the_list):
         while element in the_list: the_list.remove(element)
         return the_list
@@ -39,7 +38,6 @@ def texto_para_matriz(texto):
     vetores_linha = [np.fromstring(linha, sep=' ') for linha in vetores_linha_str]  # [array([ 4., 11., 62.]), array([-8.,  0.,  1.]), array([3., 3., 0.])]
     matriz = np.array(vetores_linha)
     return matriz
-
 
 
 def formatar_matriz(matriz: np.ndarray) -> str:
@@ -70,7 +68,8 @@ class Matriz:
     def __init__(self, texto: str):
         lista_numeros = []
         for caractere in texto:
-            if (caractere.isdecimal() and caractere not in lista_numeros) and (not texto[texto.index(caractere)+1].isdecimal()): texto = texto.replace(caractere, f'{caractere},')
+            if (caractere.isdecimal() and caractere not in lista_numeros) and (
+            not texto[texto.index(caractere) + 1].isdecimal()): texto = texto.replace(caractere, f'{caractere},')
             lista_numeros.append(caractere)
 
         texto = eval('[' + texto.replace(']', '],') + ']')
@@ -109,8 +108,8 @@ class Matriz:
         try:
             A = self._matriz  # Matriz aumentada
             num_linhas, num_colunas = A.shape[0], A.shape[1]
-            b = A[:, num_colunas-1:].T[0]
-            A = A[:, 0:num_colunas-1]
+            b = A[:, num_colunas - 1:].T[0]
+            A = A[:, 0:num_colunas - 1]
 
             x = linalg.solve(A, b, overwrite_a=True, overwrite_b=True)  # array([x1, x2, x3, ...])
 
@@ -124,9 +123,4 @@ class Matriz:
 
 
 if __name__ == '__main__':
-    texto = """
-    [1 1 1]
-    [1 1 1]
-    """
-    A = Matriz(texto)
-    print(A.solucao_sistemalinear())
+    pass
