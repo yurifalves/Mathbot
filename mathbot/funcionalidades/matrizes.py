@@ -40,7 +40,7 @@ def texto_para_matriz(texto):
     return matriz
 
 
-def formatar_matriz(matriz: np.ndarray) -> str:
+def matriz_para_texto(matriz: np.ndarray) -> str:
     """
     np.array([[a11, a12, a13],       '[a11  a12  a13]
               [a21, a22, a23],  --->  [a21  a22  a23]
@@ -74,18 +74,18 @@ class Matriz:
 
         texto = eval('[' + texto.replace(']', '],') + ']')
         self._matriz = np.array(texto)
-        self.matriz_formatada = formatar_matriz(self._matriz)
+        self.matriz_formatada = matriz_para_texto(self._matriz)
         self.tamanho = self._matriz.shape
 
     def matriz_inversa(self):
         try:
             matriz_inversa = linalg.inv(self._matriz, overwrite_a=True, check_finite=False)
-            return formatar_matriz(matriz_inversa)
+            return matriz_para_texto(matriz_inversa)
         except Exception:
             return 'Nâo foi possível realizar a operação'
 
     def matriz_transposta(self):
-        return formatar_matriz(self._matriz.T)
+        return matriz_para_texto(self._matriz.T)
 
     def determinante(self):
         try:
