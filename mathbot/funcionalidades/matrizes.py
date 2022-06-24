@@ -11,8 +11,8 @@ def texto_para_matriz(texto):
 
     '''
     1 2    3,21 7        np.array([[1, 2, 3.21, 7],
-    4  5 6  20   --->           [4, 5, 6, 20],
-    7 8 9   1                   [7, 8, 9, 1]])
+    4  5 6  20   --->              [4, 5, 6, 20],
+    7 8 9   1                      [7, 8, 9, 1]])
     '''
 
     :param texto: string no formato
