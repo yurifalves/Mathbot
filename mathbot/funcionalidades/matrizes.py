@@ -10,22 +10,13 @@ def texto_para_matriz(texto:str) -> np.ndarray:
     Ex:
 
     '''
-    1 2    3,21 7        np.array([[1, 2, 3.21, 7],
-    4  5 6  20   --->              [4, 5, 6, 20],
-    7 8 9   1                      [7, 8, 9, 1]])
+    1 2    3,21 7          np.array([[1, 2, 3.21, 7],
+    4  5 6  20     --->              [4, 5, 6, 20],
+    7 8 9   1                        [7, 8, 9, 1]])
     '''
 
-    :param texto: string no formato
-
-    a11 a12 ... a1n
-    a21 a22 ... a2n
-    am1 am2 ... amn
-
-    :return: matriz no formato
-
-    np.array([[a11, a12, ... a1n],
-              [a21, a22, ... a2n],
-              [a31, a32, ... amn]])
+    :param texto: string a ser convertida
+    :return: matriz
 
     """
     texto = texto.strip().replace(',', '.')
