@@ -28,7 +28,7 @@ def texto_para_matriz(texto):
               [a31, a32, ... amn]])
 
     """
-    texto = texto.strip()
+    texto = texto.strip().replace(',', '.')
     
     
     def remove_element(element, the_list):
