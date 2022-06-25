@@ -6,7 +6,7 @@ import sys
 import os
 import math
 import time
-from funcionalidades import primos, trigonometria, eq2grau, numaleatorios
+from funcionalidades import primos, trigonometria, eq2grau, numaleatorios, matrizes
 
 bot = telebot.TeleBot(Bot.token())
 
@@ -187,6 +187,48 @@ Erro detectado - Mensagem fora do formato.\n
         bot.reply_to(mensagem, msg_erro)
 
 
+@bot.message_handler(func=lambda mensagem: True if mensagem.text == 'Matrizes' else False)
+@bot.message_handler(commands=['matrizes'])
+def matrizes1(mensagem):
+    texto_inicial = """
+Envie as linhas da matriz, separando cada elemento por um espaço " ".\n
+Ex: "1 9 81
+     2 -21 4,551
+     0 0 7" (sem as aspas)
+Informações sobre a matriz serão retornadas
+    """
+    markup = types.ReplyKeyboardRemove(selective=False)
+    sent_msg = bot.send_message(mensagem.chat.id, texto_inicial, parse_mode='Markdown', reply_markup=markup)
+    bot.register_next_step_handler(sent_msg, matrizes2)
+
+
+def matrizes2(mensagem):
+    try:
+        start_time = time.time()
+        texto = mensagem.text
+    except:
+        msg_erro = """
+Erro detectado - Mensagem fora do formato.\n
+/matrizes Para tentar novamente
+/menu Voltar ao menu inicial
+    """
+        bot.reply_to(mensagem, msg_erro)
+    A = matrizes.Matriz(texto)
+    matriz_reduzida = A.forma_reduzida()
+    resposta = f'{matriz_reduzida}\n\ntempo de execução: {time.time() - start_time:.3f} s'
+    if len(str(resposta)) <= 4096:
+        bot.send_message(mensagem.chat.id, resposta)
+    else:
+        bot.send_message(mensagem.chat.id,
+                         f'Tamanho da resposta muito grande ( >= 4096 caracteres ),\no resultado estará no .txt abaixo:')
+        ref_arquivo = open(f'matriz.txt', mode='w')
+        ref_arquivo.write(resposta)
+        ref_arquivo.close()
+        bot.send_document(mensagem.chat.id, open(f'matriz.txt', mode='rb'))
+        os.remove(f'matriz.txt')
+    bot.send_message(mensagem.chat.id, 'Para voltar ao menu principal:\n/menu')
+
+
 @bot.message_handler(func=lambda mensagem: True if mensagem.text == 'informações' else False)
 @bot.message_handler(commands=['informacoes'])
 def informacoes(mensagem):
@@ -204,6 +246,7 @@ def responder(mensagem):
 /calcularprimos Calcula todos os primos num intervalo fechado [[a, b]]
 /eq2grau Calcula as raízes de um polinômio de grau 2
 /numaleatorios Retorna uma lista de números aleatórios
+/matrizes Retorna informações sobre uma matriz
 /informacoes
     """
     markup = types.ReplyKeyboardMarkup()
@@ -212,13 +255,15 @@ def responder(mensagem):
     itembtn3 = types.KeyboardButton('Calcular Primos')
     itembtn4 = types.KeyboardButton('Equação 2° grau')
     itembtn5 = types.KeyboardButton('Números Aleatórios')
-    itembtn6 = types.KeyboardButton('informações')
+    itembtn6 = types.KeyboardButton('Matrizes')
+    itembtn7 = types.KeyboardButton('informações')
     markup.row(itembtn1)
     markup.row(itembtn2)
     markup.row(itembtn3)
     markup.row(itembtn4)
     markup.row(itembtn5)
     markup.row(itembtn6)
+    markup.row(itembtn7)
     bot.send_message(mensagem.chat.id, texto_padrao, parse_mode='Markdown', reply_markup=markup)
 
 
