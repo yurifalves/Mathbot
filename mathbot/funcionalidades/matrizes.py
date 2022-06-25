@@ -46,25 +46,17 @@ class Matriz:
     """
     formato da string:
 
-    [a11 a12 a13 ... a1n]
-    [a21 a22 a23 ... a2n]
-    [a31 a32 a33 ... a3n]
+    a11 a12 a13 ... a1n
+    a21 a22 a23 ... a2n
+    a31 a32 a33 ... a3n
               .
               .
               .
-    [am1 am2 am3 ... amn]
+    am1 am2 am3 ... amn
     """
 
     def __init__(self, texto: str):
-        lista_numeros = []
-        for caractere in texto:
-            if (caractere.isdecimal() and caractere not in lista_numeros) and (
-                    not texto[texto.index(caractere) + 1].isdecimal()): texto = texto.replace(caractere,
-                                                                                              f'{caractere},')
-            lista_numeros.append(caractere)
-
-        texto = eval('[' + texto.replace(']', '],') + ']')
-        self._matriz = np.array(texto)
+        self._matriz = texto_para_matriz(texto)
         self.matriz_formatada = matriz_para_texto(self._matriz)
         self.tamanho = self._matriz.shape
 
@@ -93,9 +85,10 @@ class Matriz:
 
 if __name__ == '__main__':
     texto = """
-    [1 2 3]
-    [4 5 6]
+    1 2 3,98131
+    4 5 6
+    8 9 9
     """
 
     A = Matriz(texto)
-    print(A.forma_reduzida())
+    print(A.determinante())
