@@ -12,7 +12,7 @@
 
 #### [Matplotlib](https://matplotlib.org/)
 
-#### [NumPy](https://numpy.org/) e [SciPy](https://scipy.org/)
+#### [NumPy](https://numpy.org/), [SciPy](https://scipy.org/), [SymPy]([https://scipy.org/](https://www.sympy.org/en/index.html))
 
 # Como utilizar o bot?
 
@@ -26,3 +26,4 @@ Antes de tudo, certifique-se de executar no terminal o comando `pip install -r r
 `/fatorial` ou `Fatorial` (Calcula o fatorial de um número)<br>
 `/eq2grau` ou `Equação 2° grau` (Calcula as raízes de um polinômio de grau 2)<br>
 `/numaleatorios` ou `Números Aleatórios` (Retorna um conjunto de [números aleatórios](https://www.random.org/))<br>
+`/matrizes` Retorna informações sobre uma matriz
