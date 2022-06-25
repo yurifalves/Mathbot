@@ -12,7 +12,7 @@
 
 #### [Matplotlib](https://matplotlib.org/)
 
-#### [NumPy](https://numpy.org/), [SciPy](https://scipy.org/), [SymPy]([https://scipy.org/](https://www.sympy.org/en/index.html))
+#### [NumPy](https://numpy.org/), [SciPy](https://scipy.org/), [SymPy](https://www.sympy.org/en/index.html)
 
 # Como utilizar o bot?
 
