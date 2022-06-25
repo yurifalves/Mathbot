@@ -3,7 +3,7 @@ from scipy import linalg
 import sympy
 
 
-def texto_para_matriz(texto:str) -> np.ndarray:
+def texto_para_matriz(texto: str) -> np.ndarray:
     """
     Converte um texto para uma matriz, eliminando espaços e quebras de linha em excesso.
 
@@ -25,7 +25,8 @@ def texto_para_matriz(texto:str) -> np.ndarray:
         return the_list
 
     vetores_linha_str = remove_element('', texto.splitlines())  # ['4 11 62', '-8 0 1', '3 3 0']
-    vetores_linha = [np.fromstring(linha, sep=' ') for linha in vetores_linha_str]  # [array([ 4., 11., 62.]), array([-8.,  0.,  1.]), array([3., 3., 0.])]
+    vetores_linha = [np.fromstring(linha, sep=' ') for linha in
+                     vetores_linha_str]  # [array([ 4., 11., 62.]), array([-8.,  0.,  1.]), array([3., 3., 0.])]
     matriz = np.array(vetores_linha)
     return matriz
 
@@ -58,28 +59,28 @@ class Matriz:
         lista_numeros = []
         for caractere in texto:
             if (caractere.isdecimal() and caractere not in lista_numeros) and (
-            not texto[texto.index(caractere) + 1].isdecimal()): texto = texto.replace(caractere, f'{caractere},')
+                    not texto[texto.index(caractere) + 1].isdecimal()): texto = texto.replace(caractere,
+                                                                                              f'{caractere},')
             lista_numeros.append(caractere)
 
         texto = eval('[' + texto.replace(']', '],') + ']')
         self._matriz = np.array(texto)
         self.matriz_formatada = matriz_para_texto(self._matriz)
         self.tamanho = self._matriz.shape
-        
-    
+
     def forma_reduzida(self):
         M = sympy.Matrix(self._matriz)
         forma_reduzida = np.array(M.rref(pivots=False))
         return matriz_para_texto(forma_reduzida)
 
-    def matriz_inversa(self):
+    def inversa(self):
         try:
             matriz_inversa = linalg.inv(self._matriz, overwrite_a=True, check_finite=False)
             return matriz_para_texto(matriz_inversa)
         except Exception:
             return 'Nâo foi possível realizar a operação'
 
-    def matriz_transposta(self):
+    def transposta(self):
         return matriz_para_texto(self._matriz.T)
 
     def determinante(self):
@@ -91,4 +92,10 @@ class Matriz:
 
 
 if __name__ == '__main__':
-    pass
+    texto = """
+    [1 2 3]
+    [4 5 6]
+    """
+
+    A = Matriz(texto)
+    print(A.forma_reduzida())
