@@ -1,5 +1,6 @@
 import numpy as np
 from scipy import linalg
+import sympy
 
 
 def texto_para_matriz(texto:str) -> np.ndarray:
@@ -64,6 +65,12 @@ class Matriz:
         self._matriz = np.array(texto)
         self.matriz_formatada = matriz_para_texto(self._matriz)
         self.tamanho = self._matriz.shape
+        
+    
+    def forma_reduzida(self):
+        M = sympy.Matrix(self._matriz)
+        forma_reduzida = np.array(M.rref(pivots=False))
+        return matriz_para_texto(forma_reduzida)
 
     def matriz_inversa(self):
         try:
