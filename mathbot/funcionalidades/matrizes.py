@@ -25,6 +25,7 @@ class Matriz:
     def matriz_adjunta(self):
         adjunta = self.determinante * self.matriz_inversa()
         return adjunta
+
     def matriz_dos_cofatores(self):
         cofatores = self.matriz_adjunta().T
         return cofatores
@@ -36,4 +37,4 @@ if __name__ == '__main__':
     ])
 
     A = Matriz(A)
-    print(A.determinante)
+    print(A.matriz_dos_cofatores())
