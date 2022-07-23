@@ -54,9 +54,28 @@ def matriz_dos_cofatores(matriz):
     return matriz_dos_cofatores
 
 
+def resolver_sistemalinear(matriz_aumentada):
+    import numpy as np
+
+    matriz_aumentada = np.array(matriz_aumentada)
+
+    A = matriz_aumentada[:, :-1]
+    b = matriz_aumentada[:, -1]
+
+    x = np.linalg.solve(A, b)
+    return x
+
+
+
 if __name__ == '__main__':
-    A = [[1, 4, 5, 7],
-         [2, 9, 5, 0],
-         [2, 9, 9, 0],
-         [-1, -4, -5, 0]]
-    print(matriz_dos_cofatores(A))
+    import numpy as np
+
+    matriz_aumentada = np.array([
+        [5, -2, 5, -5, 6, -8, -9],
+        [-6, 6, -3, 1, 4, -8, -5],
+        [-5, 5, -7, 3, -4, 3, 21],
+        [-1, -4, -9, 6, 9, 5, 26],
+        [7, 5, -8, -4, 7, -6, 65],
+        [4, -1, -3, 5, -3, -5, 149]
+    ])
+    print(resolver_sistemalinear(matriz_aumentada))
