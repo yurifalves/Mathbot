@@ -1,40 +1,62 @@
-import numpy as np
-from scipy import linalg
-import sympy
+def forma_escalonada_reduzida(matriz):
+    import sympy
+    import numpy as np
+    matriz = np.array(matriz)
+    M = sympy.Matrix(matriz)
+    forma_escalonada_reduzida = np.array(M.rref(pivots=False), dtype=float)
+    return forma_escalonada_reduzida
 
 
-class Matriz:
+def determinante(matriz):
+    from scipy import linalg
+    import numpy as np
+    matriz = np.array(matriz)
+    determinante = linalg.det(matriz, overwrite_a=True, check_finite=False)
+    return determinante
 
-    def __init__(self, matriz):
-        self._matriz = matriz
-        self.tamanho = f'{matriz.shape[0]}×{matriz.shape[1]}'
-        self.determinante = linalg.det(self._matriz, overwrite_a=True, check_finite=False)
 
-    def forma_escalonada_reduzida(self):
-        M = sympy.Matrix(self._matriz)
-        forma_escalonada_reduzida = np.array(M.rref(pivots=False))
-        return forma_escalonada_reduzida
+def matriz_inversa(matriz):
+    from scipy import linalg
+    import numpy as np
+    matriz = np.array(matriz)
+    matriz_inversa = linalg.inv(matriz, overwrite_a=True, check_finite=False)
+    return matriz_inversa
 
-    def matriz_inversa(self):
-        matriz_inversa = linalg.inv(self._matriz, overwrite_a=True, check_finite=False)
-        return matriz_inversa
 
-    def matriz_transposta(self):
-        return self._matriz.T
+def matriz_transposta(matriz):
+    import numpy as np
+    matriz = np.array(matriz)
+    matriz_transposta = matriz.T
+    return matriz_transposta
 
-    def matriz_adjunta(self):
-        adjunta = self.determinante * self.matriz_inversa()
-        return adjunta
 
-    def matriz_dos_cofatores(self):
-        cofatores = self.matriz_adjunta().T
-        return cofatores
+def matriz_adjunta(matriz):
+    from scipy import linalg
+    import numpy as np
+    matriz = np.array(matriz)
+    determinante = linalg.det(matriz, overwrite_a=True, check_finite=False)
+    matriz_inversa = linalg.inv(matriz, overwrite_a=True, check_finite=False)
+
+    matriz_adjunta = determinante * matriz_inversa
+    return matriz_adjunta
+
+
+def matriz_dos_cofatores(matriz):
+    from scipy import linalg
+    import numpy as np
+    matriz = np.array(matriz)
+    determinante = linalg.det(matriz, overwrite_a=True, check_finite=False)
+    matriz_inversa = linalg.inv(matriz, overwrite_a=True, check_finite=False)
+
+    matriz_adjunta = determinante * matriz_inversa
+
+    matriz_dos_cofatores = matriz_adjunta.T
+    return matriz_dos_cofatores
+
 
 if __name__ == '__main__':
-    A = np.array([
-        [1, 2],
-        [3, 4]
-    ])
-
-    A = Matriz(A)
-    print(A.matriz_dos_cofatores())
+    A = [[1, 4, 5, 7],
+         [2, 9, 5, 0],
+         [2, 9, 9, 0],
+         [-1, -4, -5, 0]]
+    print(matriz_dos_cofatores(A))
